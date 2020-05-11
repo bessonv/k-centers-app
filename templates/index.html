@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=c00299c7-3827-4f2b-b0ad-d11d4bedba74&lang=ru_RU" type="text/javascript">
+    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="app_container">
+        <div id="map_container">
+            <div id="map"></div>
+        </div>
+        <div id="options">
+            <h2>Options</h2>
+            <div class="options_algorithm">
+                <div class="form-group">
+                    <label for="algorithm_type">Algorithm</label>
+                    <select name="algorithm" id="algorithm_type" class="custom-select">
+                        <option value="greedy" disabled>greedy optimal</option>
+                        <option value="greedyAprox">greedy approxymation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="k_centres">Number of k-centers</label>
+                    <input type="number" id="k_centres" name="k_centres" min="1" max="">
+                </div>
+            </div>
+            <button class="send_button btn btn-primary">Add lines</button>
+            <button class="clear_button btn btn-secondary">Clear</button>
+            <button class="reset_button btn btn-danger">Reset</button>
+            <div class="markers_list">
+                <p>List of markers:</p>
+                <ul class="markers list-group"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
