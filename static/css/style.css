@@ -35,7 +35,7 @@ html, body, #map {
     overflow-y: scroll;
 }
 
-.markers_list {
+.markers_list, .buttons, .output {
     margin-top: 1rem;
 }
 

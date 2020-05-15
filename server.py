@@ -26,6 +26,7 @@ def api():
         # algorithm = TwoApprox(plist, k)
         k_list = algorithm.run_algorithm()
         l_list = algorithm.get_l_list()
+        max_distance = algorithm.get_max_distance()
 
         # l_groups = []
         # k_list = find_K_north_points(plist, k)
@@ -38,7 +39,8 @@ def api():
 
         return {
             "klist": k_list,
-            "llist": l_list
+            "llist": l_list,
+            "distance": max_distance
         }
     elif request.method == 'GET':
         return render_template('index.html')

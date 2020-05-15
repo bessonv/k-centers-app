@@ -10,6 +10,7 @@ window.onload = () => {
     let resetButton = document.querySelector('.reset_button');
     let kCentersFeild = document.querySelector('#k_centres');
     let algorithmSelect = document.querySelector('#algorithm_type');
+    let distance = document.querySelector('.max_distance')
 
     async function postData(url = '', data = {}) {
         const response = await fetch(url, {
@@ -66,6 +67,7 @@ window.onload = () => {
                     mlines.push(newLine);
                     map.geoObjects.add(newLine);
                 });
+                setMaxDistance(data.distance);
             })
             .catch((e) => {
                 console.log(e);
@@ -77,6 +79,7 @@ window.onload = () => {
         mullist = [];
         currentId = 0;
         markers.innerHTML = '';
+        distance.innerHTML = '';
         map.geoObjects.removeAll();
     }
 
@@ -87,6 +90,7 @@ window.onload = () => {
         mgeolist.forEach(marker => {
             marker.options.set('preset', 'islands#blueCircleDotIcon');
         });
+        distance.innerHTML='';
         mlines = [];
     }
 
@@ -98,6 +102,11 @@ window.onload = () => {
         marker.classList.add('list-group-item');
         marker.appendChild(document.createTextNode(`Point ${currentId}: (${coords[0].toPrecision(6)}; ${coords[1].toPrecision(6)})`));
         markers.appendChild(marker);
+    }
+
+    function setMaxDistance(value) {
+        if (value)
+            distance.innerHTML = `${value.toPrecision(6)} Km`;
     }
 
     function init() {

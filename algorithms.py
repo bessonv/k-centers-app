@@ -20,6 +20,24 @@ class Algorithm:
             return True
         return False
 
+    def max_distance(self, k_centers, vertexes):
+        max_dist = 0
+        for vertex in vertexes:
+            min_dist = k_centers[0].distance(vertex)
+            # vertex_center = k_centers[0]
+            for center in k_centers:
+                center_dist = center.distance(vertex)
+                if (center_dist < min_dist):
+                    min_dist = center_dist
+                    # vertex_center = center
+            max_vertex_dist = min_dist
+            if (max_vertex_dist > max_dist):
+                max_dist = max_vertex_dist
+        return max_dist
+
+    def get_max_distance(self):
+        return self.max_distance(self.k_centers, self.vertexes)
+
     def get_k_centers(self):
         result = []
         for vertex in self.k_centers:
@@ -79,19 +97,14 @@ class Greedy(Algorithm):
     def set_center(self, k_centers, vertexes, i):
         if (len(k_centers) >= self.k_num):
             return k_centers
-        p_center = vertexes[0]
-        p_k_centers = k_centers[:]
-        p_vertexes = vertexes[:]
-        p_k_centers.append(p_center)
-        p_vertexes.remove(p_center)
-        min_distance = self.get_max_distance(p_k_centers, p_vertexes)
+        min_distance = False
         for inx, vertex in enumerate(vertexes):
             p_k_centers = k_centers[:]
             p_vertexes = vertexes[:]
             p_k_centers.append(vertex)
             p_vertexes.remove(vertex)
-            distance = self.get_max_distance(p_k_centers, p_vertexes)
-            if (distance < min_distance):
+            distance = self.max_distance(p_k_centers, p_vertexes)
+            if (distance < min_distance or not min_distance):
                 min_distance = distance
                 p_center = vertexes[inx-1]
         
@@ -99,38 +112,12 @@ class Greedy(Algorithm):
         vertexes.remove(p_center)
         
         return self.set_center(k_centers, vertexes, i+1)
-        
-    def get_max_distance(self, k_centers, vertexes):
-        max_dist = 0
-        for vertex in vertexes:
-            min_dist = k_centers[0].distance(vertex)
-            # vertex_center = k_centers[0]
-            for center in k_centers:
-                center_dist = center.distance(vertex)
-                if (center_dist < min_dist):
-                    min_dist = center_dist
-                    # vertex_center = center
-            max_vertex_dist = min_dist
-            if (max_vertex_dist > max_dist):
-                max_dist = max_vertex_dist
-        return max_dist
 
     def run_algorithm(self):
-        # self.add_to_k_centers(self.vertexes[0])
-        print("before k_centers", len(self.k_centers))
-        print("before vertexs", len(self.vertexes))
+        # print("before k_centers", len(self.k_centers))
+        # print("before vertexs", len(self.vertexes))
         self.k_centers = self.set_center(self.k_centers, self.vertexes, 1)
         return self.get_k_centers()
-
-    def get_max_distance2(self, k_centers, vertexes):
-        max_distance = k_centers[0].distance(vertexes[0])
-        for center in k_centers:
-            for vertex in vertexes:
-                distance = center.distance(vertex)
-                if (distance > max_distance):
-                    max_distance = distance
-        return distance
-                    
 
 
 class Vertex:
