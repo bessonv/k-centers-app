@@ -6,12 +6,31 @@ class Algorithm:
         self.k_num = k_num
         self.vertexes = []
         self.k_centers = []
+        self.distance_matrix = []
         for point in points:
             vertex = Vertex(point["coordinates"], point["id"])
             self.vertexes.append(vertex)
+        self.start_vertexes = self.vertexes[:]
+        # print('Computing matrix')
+        self.compute_distance_matrix()
+        # print('Matrix computed')
+        # print('From matrix' ,self.get_distance(self.vertexes[0], self.vertexes[29]))
+        # print('From vert', self.vertexes[0].distance(self.vertexes[29]))
+        # print(self.distance_matrix)
 
     def run_algorithm(self):
         pass
+
+    def compute_distance_matrix(self):
+        for vertex1 in self.vertexes:
+            row = []
+            for vertex2 in self.vertexes:
+                row.append(vertex1.distance(vertex2))
+            self.distance_matrix.append(row)
+        return self.distance_matrix
+
+    def get_distance(self, vertex1, vertex2):
+        return self.distance_matrix[vertex1.id][vertex2.id]
 
     def add_to_k_centers(self, vertex):
         self.k_centers.append(vertex)
@@ -23,13 +42,11 @@ class Algorithm:
     def max_distance(self, k_centers, vertexes):
         max_dist = 0
         for vertex in vertexes:
-            min_dist = k_centers[0].distance(vertex)
-            # vertex_center = k_centers[0]
+            min_dist = self.get_distance(k_centers[0], vertex)
             for center in k_centers:
-                center_dist = center.distance(vertex)
+                center_dist = self.get_distance(center, vertex)
                 if (center_dist < min_dist):
                     min_dist = center_dist
-                    # vertex_center = center
             max_vertex_dist = min_dist
             if (max_vertex_dist > max_dist):
                 max_dist = max_vertex_dist
@@ -78,13 +95,17 @@ class TwoApprox(Algorithm):
                     max_dist = subset_dist
                     further_vertex = vertex
             self.add_to_k_centers(further_vertex)
+            # print('Num of vert', len(self.vertexes))
+            # print('Num of k_cent', len(self.k_centers))
         return self.get_k_centers()
 
     def subset_distance(self, vertex):
-        min_dist = self.k_centers[0].distance(vertex)
+        # min_dist = self.k_centers[0].distance(vertex)
+        min_dist = self.get_distance(self.k_centers[0], vertex)
         center_dist = min_dist
         for center in self.k_centers:
-            center_dist = center.distance(vertex)
+            center_dist = self.get_distance(center, vertex)
+            # center_dist = center.distance(vertex)
             if (center_dist <= min_dist):
                 min_dist = center_dist
         return center_dist
