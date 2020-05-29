@@ -4,7 +4,7 @@ sys.path.append(".")
 from flask import Flask
 from flask import request, render_template
 
-from algorithms import Algorithm, Vertex, TwoApprox, Greedy
+from algorithms import Algorithm, Vertex, TwoApprox, Greedy, KMeans
 
 app = Flask(__name__)
 
@@ -18,7 +18,8 @@ def api():
 
         algorithms = {
             'two_approx': TwoApprox,
-            'greedy': Greedy
+            'greedy': Greedy,
+            'k_means': KMeans
         }
 
         algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k)

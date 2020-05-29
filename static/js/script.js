@@ -44,6 +44,7 @@ window.onload = () => {
         });
         console.log(mlist, knum);
         postData('http://bessonv.pythonanywhere.com', { mlist: mlist, knum: knum, algorithm: algorithm })
+        // postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm })
             .then((data) => {
                 console.log(data);
                 
