@@ -1,6 +1,5 @@
 import sys, getopt, json
-from algorithms import Algorithm, Vertex, TwoApprox, Greedy, KMeans, TabuSearch
-
+from algorithms import TwoApprox, Greedy, KMeans, TabuSearch
 
 def main(argv):
     inputfile = ''

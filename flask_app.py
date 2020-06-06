@@ -1,10 +1,7 @@
-import sys
-sys.path.append(".")
-
 from flask import Flask
 from flask import request, render_template
 
-from algorithms import Algorithm, Vertex, TwoApprox, Greedy, KMeans, TabuSearch
+from algorithms import TwoApprox, Greedy, KMeans, TabuSearch
 
 app = Flask(__name__)
 
