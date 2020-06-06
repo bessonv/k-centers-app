@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request, render_template
 
-from algorithms import TwoApprox, Greedy, KMeans, TabuSearch
+from algorithms import TwoApprox, Greedy, KMeans, TabuSearch, Grasp
 
 app = Flask(__name__)
 
@@ -17,7 +17,8 @@ def api():
             'two_approx': TwoApprox,
             'greedy': Greedy,
             'k_means': KMeans,
-            'tabu_search': TabuSearch
+            'tabu_search': TabuSearch,
+            'grasp': Grasp
         }
 
         algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k)
