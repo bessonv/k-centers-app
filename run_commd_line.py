@@ -1,5 +1,5 @@
 import sys, getopt, json
-from algorithms import Algorithm, Vertex, TwoApprox, Greedy, KMeans
+from algorithms import Algorithm, Vertex, TwoApprox, Greedy, KMeans, TabuSearch
 
 
 def main(argv):
@@ -26,7 +26,8 @@ def main(argv):
     algorithms = {
         'two_approx': TwoApprox,
         'greedy': Greedy,
-        'k_means': KMeans
+        'k_means': KMeans,
+        'tabu_search': TabuSearch
     }
 
     print('Vertexes:', len(plist))
