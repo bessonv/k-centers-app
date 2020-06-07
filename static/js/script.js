@@ -54,21 +54,44 @@ window.onload = () => {
                     });
                     redMarker.options.set('preset', 'islands#redCircleDotIcon');
                 });
-                data.llist.forEach(line => {
-                    let newLine = new ymaps.GeoObject({
-                        geometry: {
-                            type: "LineString",
-                            coordinates: line
+                let maxPath = data.path.ids;
+                let max_distance = data.distance;
+                data.plist.forEach(path => {
+                    ymaps.route(
+                        path.coordinates,
+                    {
+                        multiRoute: false
+                    }).then(route => {
+                        route.getPaths().options.set({
+                            strokeColor: "#000000",
+                            strokeOpacity: "0.5"
+                        })
+                        let startPoint = route.getWayPoints().get(0);
+                        let endPoint = route.getWayPoints().get(1);
+                        startPoint.options.set({preset: 'islands#redCircleDotIcon'});
+                        startPoint.properties.set({
+                            balloonContentHeader: "k-center",
+                            balloonContentBody: `Point ${path.ids[0]}: (${startPoint.geometry._coordinates[0]}, ${startPoint.geometry._coordinates[1]})`,
+                            hintContent: path.ids[0]
+                        });
+                        endPoint.options.set({preset: 'islands#blueCircleDotIcon'});
+                        if (
+                            path.ids[0] == maxPath[0] && path.ids[1] == maxPath[1] ||
+                            path.ids[1] == maxPath[0] && path.ids[1] == maxPath[0]
+                            ) {
+                            maxLength = route.getLength();
+                            setMaxDistance(maxLength);
+                            route.getPaths().options.set({
+                                strokeColor: "#ed4543",
+                                strokeOpacity: "1"
+                            })
                         }
-                    }, {
-                        strokeColor: "#000000",
-                        strokeWidth: 3,
-                        stokeOpacity: 0.5
+                        mlines.push(route);
+                        map.geoObjects.add(route);
+                    }).catch(e => {
+                        console.log(e);
                     });
-                    mlines.push(newLine);
-                    map.geoObjects.add(newLine);
                 });
-                setMaxDistance(data.distance);
             })
             .catch((e) => {
                 console.log(e);
@@ -106,8 +129,10 @@ window.onload = () => {
     }
 
     function setMaxDistance(value) {
-        if (value)
+        if (value) {
+            value = value / 1000;
             distance.innerHTML = `${value.toPrecision(6)} Km`;
+        }
     }
 
     function init() {
