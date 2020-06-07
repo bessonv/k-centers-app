@@ -2,11 +2,17 @@ from .algorithm import Algorithm, Vertex
 from random import randint, sample, choice
 
 class TabuSearch(Algorithm):
-    def __init__(self, points, k_num):
-        super().__init__(points, k_num)
+    def __init__(self, points, k_num, options):
+        super().__init__(points, k_num, options)
         self.tabu_list = []
         self.best_so = []
         self.best_candidate = []
+        self.iterations = 0
+        for option in options:
+            if (option["name"] == 'iterations'):
+                self.iterations = option["value"]
+        if not self.iterations:
+            self.iterations = 1
 
     def set_initial_solution(self):
         self.tabu_list = []
@@ -47,7 +53,7 @@ class TabuSearch(Algorithm):
 
     def run_algorithm(self):
         self.set_initial_solution()
-        iterations = 25
+        iterations = self.iterations
         for _ in range(iterations):
             candidate_distance = self.change_candidate()
             if (self.solution_distance > candidate_distance):

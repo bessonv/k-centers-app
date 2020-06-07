@@ -2,10 +2,16 @@ from .algorithm import Algorithm, Vertex
 from random import randint, sample
 
 class KMeans(Algorithm):
-    def __init__(self, points, k_num):
-        super().__init__(points, k_num)
+    def __init__(self, points, k_num, options):
+        super().__init__(points, k_num, options)
         self.cluster_centers = []
         self.clusters = []
+        self.iterations = 0
+        for option in options:
+            if (option["name"] == 'iterations'):
+                self.iterations = option["value"]
+        if not self.iterations:
+            self.iterations = 1
 
     def set_initial_centers(self):
         self.clusters = []
@@ -50,7 +56,7 @@ class KMeans(Algorithm):
             return True
 
     def run_algorithm(self):
-        l_num = 5 # number of iterations
+        l_num = self.iterations
         for _ in range(l_num):
             self.set_initial_centers()
             not_equal = True

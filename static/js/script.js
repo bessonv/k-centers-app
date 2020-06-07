@@ -8,9 +8,10 @@ window.onload = () => {
     let sendButton = document.querySelector('.send_button');
     let clearButton = document.querySelector('.clear_button');
     let resetButton = document.querySelector('.reset_button');
-    let kCentersFeild = document.querySelector('#k_centres');
+    let kCentersFeild = document.querySelector('#k_centers');
     let algorithmSelect = document.querySelector('#algorithm_type');
-    let distance = document.querySelector('.max_distance')
+    let distance = document.querySelector('.max_distance');
+    let algorithmOptions = [];
 
     async function postData(url = '', data = {}) {
         const response = await fetch(url, {
@@ -28,6 +29,7 @@ window.onload = () => {
         let mlist = [];
         let knum = parseInt(kCentersFeild.value);
         let algorithm = algorithmSelect.value;
+        let options = getOptionValue();
 
         if (!(mlist && knum && algorithm)) {
             alert('One of the options is empty');
@@ -43,8 +45,8 @@ window.onload = () => {
             });
         });
         console.log(mlist, knum);
-        postData('http://bessonv.pythonanywhere.com', { mlist: mlist, knum: knum, algorithm: algorithm })
-        // postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm })
+        postData('http://bessonv.pythonanywhere.com', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
+        // postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
             .then((data) => {
                 console.log(data);
                 
@@ -52,7 +54,15 @@ window.onload = () => {
                     let redMarker = mgeolist.find(marker => {
                         return marker.properties.get('id') == kpoint.id;
                     });
-                    redMarker.options.set('preset', 'islands#redCircleDotIcon');
+                    // redMarker.options.set('preset', 'islands#redCircleDotIcon');
+                    redMarker.options.set('preset', 'islands#redCircleIcon');
+                    // redMarker.options.set({preset: 'islands#redIcon'});
+                    redMarker.properties.set({
+                        iconContent: kpoint.id,
+                        balloonContentHeader: "k-center",
+                        balloonContentBody: `Point ${kpoint.id}: (${kpoint.coordinates[0]}, ${kpoint.coordinates[1]})`,
+                        hintContent:  kpoint.id
+                    });
                 });
                 let maxPath = data.path.ids;
                 let max_distance = data.distance;
@@ -68,8 +78,11 @@ window.onload = () => {
                         })
                         let startPoint = route.getWayPoints().get(0);
                         let endPoint = route.getWayPoints().get(1);
-                        startPoint.options.set({preset: 'islands#redCircleDotIcon'});
+                        // startPoint.options.set({preset: 'islands#redCircleDotIcon'});
+                        startPoint.options.set({preset: 'islands#redCircleIcon'});
+                        // startPoint.options.set({preset: 'islands#redIcon'});
                         startPoint.properties.set({
+                            iconContent: path.ids[0],
                             balloonContentHeader: "k-center",
                             balloonContentBody: `Point ${path.ids[0]}: (${startPoint.geometry._coordinates[0]}, ${startPoint.geometry._coordinates[1]})`,
                             hintContent: path.ids[0]
@@ -116,6 +129,33 @@ window.onload = () => {
         });
         distance.innerHTML='';
         mlines = [];
+    }
+
+    algorithmSelect.onchange = (event) => {
+        if (algorithmSelect.value) {
+            let algorithm = algorithmSelect.value;
+            let options = document.querySelector(`#${algorithm}`);
+            let active = document.querySelector('.active');
+            algorithmOptions = [];
+            if (active) {
+                active.classList.remove('active');
+                active.classList.add('hidden')
+            }
+            if (options) {
+                options.classList.remove('hidden');
+                options.classList.add('active');
+            }
+        }
+    }
+
+    function getOptionValue() {
+        document.querySelectorAll('.active .option').forEach(option => {
+            algorithmOptions.push({
+                name: `${option.id}`,
+                value: parseInt(option.value)
+            });
+        });
+        return algorithmOptions;
     }
 
     ymaps.ready(init);

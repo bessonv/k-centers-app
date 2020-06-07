@@ -2,8 +2,8 @@ from .algorithm import Algorithm, Vertex
 from random import randint, sample, choice
 
 class Grasp(Algorithm):
-    def __init__(self, points, k_num):
-        super().__init__(points, k_num)
+    def __init__(self, points, k_num, options):
+        super().__init__(points, k_num, options)
         self.best_so = []
 
     def greedy_solution(self, k_centers, vertexes, i):

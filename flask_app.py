@@ -11,6 +11,7 @@ def api():
         data = request.get_json()
         plist = data["mlist"]
         k = data["knum"]
+        options = data["options"]
         alg_type = data["algorithm"]
 
         algorithms = {
@@ -21,7 +22,7 @@ def api():
             'grasp': Grasp
         }
 
-        algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k)
+        algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k, options)
         k_list = algorithm.run_algorithm()
         p_list = algorithm.get_l_list()
         path = algorithm.get_max_distance()

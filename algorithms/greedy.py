@@ -1,8 +1,8 @@
 from .algorithm import Algorithm, Vertex
 
 class Greedy(Algorithm):
-    def __init__(self, points, k_num):
-        super().__init__(points, k_num)
+    def __init__(self, points, k_num, options):
+        super().__init__(points, k_num, options)
 
     def set_center(self, k_centers, vertexes, i):
         if (len(k_centers) >= self.k_num):

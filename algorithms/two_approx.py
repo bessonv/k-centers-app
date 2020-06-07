@@ -2,8 +2,8 @@ from .algorithm import Algorithm, Vertex
 from random import randint
 
 class TwoApprox(Algorithm):
-    def __init__(self, points, k_num):
-        super().__init__(points, k_num)
+    def __init__(self, points, k_num, options):
+        super().__init__(points, k_num, options)
 
     def run_algorithm(self):
         self.add_to_k_centers(self.vertexes[randint(0, len(self.vertexes)-1)])

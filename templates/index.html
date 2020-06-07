@@ -28,9 +28,19 @@
                         <option value="grasp">grasp</option>
                     </select>
                 </div>
+                <div class="form-group algorithm-options">
+                    <div class="options-set hidden" id="k_means">
+                        <label for="iterations">Number of iterations</label>
+                        <input type="number" id="iterations" class="option" name="iterations" min="1" max="">
+                    </div>
+                    <div class="options-set hidden" id="tabu_search">
+                        <label for="iterations">Number of iterations</label>
+                        <input type="number" id="iterations" class="option" name="iterations" min="1" max="">
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="k_centres">Number of k-centers</label>
-                    <input type="number" id="k_centres" name="k_centres" min="1" max="">
+                    <label for="k_centers">Number of k-centers</label>
+                    <input type="number" id="k_centers" name="k_centers" min="1" max="">
                 </div>
             </div>
             <div class="buttons">

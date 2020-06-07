@@ -1,8 +1,9 @@
 from math import radians, cos, sin, asin, sqrt
 
 class Algorithm:
-    def __init__(self, points, k_num):
+    def __init__(self, points, k_num, options = []):
         self.k_num = k_num
+        self.options = options
         self.vertexes = []
         self.k_centers = []
         self.distance_matrix = []
