@@ -49,8 +49,9 @@ window.onload = () => {
         // postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
             .then((data) => {
                 console.log(data);
-                
+                let ids = '';
                 data.klist.map(kpoint => {
+                    ids = ids + ' ' + kpoint.id;
                     let redMarker = mgeolist.find(marker => {
                         return marker.properties.get('id') == kpoint.id;
                     });
@@ -64,6 +65,7 @@ window.onload = () => {
                         hintContent:  kpoint.id
                     });
                 });
+                console.log(ids);
                 let maxPath = data.path.ids;
                 let max_distance = data.distance;
                 data.plist.forEach(path => {

@@ -34,9 +34,9 @@ def main(argv):
     print('K-Centers: ', k_num)
     
     for alg_type in algorithms:
-        algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k_num)
+        algorithm = algorithms.get(alg_type, lambda: "Invalid algorithm name")(plist, k_num, [{'name': 'iterations', 'value': 5}])
         k_list = algorithm.run_algorithm()
-        l_list = algorithm.get_l_list()
+        # l_list = algorithm.get_l_list()
         max_distance = algorithm.get_max_distance()
 
         print('-----------')

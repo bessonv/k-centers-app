@@ -15,8 +15,6 @@ class TwoApprox(Algorithm):
                     max_dist = subset_dist
                     further_vertex = vertex
             self.add_to_k_centers(further_vertex)
-            # print('Num of vert', len(self.vertexes))
-            # print('Num of k_cent', len(self.k_centers))
         return self.get_k_centers()
 
     def subset_distance(self, vertex):

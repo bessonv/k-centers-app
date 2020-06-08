@@ -65,7 +65,6 @@ class KMeans(Algorithm):
                 not_equal = self.change_weights() # change weight for every claster
             if (self.max_distance(self.cluster_centers, self.vertexes) < self.max_distance(self.k_centers, self.vertexes)):
                 self.k_centers = self.cluster_centers[:]
-            # print('Ineration clusters:', len(self.clusters))
         return self.get_k_centers()
 
 class Cluster:

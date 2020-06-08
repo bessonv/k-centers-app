@@ -62,6 +62,10 @@ class Algorithm:
 
     def get_k_centers(self):
         result = []
+        self.vertexes = []
+        for vertex in self.start_vertexes:
+            if (vertex not in self.k_centers):
+                self.vertexes.append(vertex)
         for vertex in self.k_centers:
             center = vertex.get_dict()
             result.append(center)

@@ -18,45 +18,37 @@ class Grasp(Algorithm):
             distance = self.max_distance(p_k_centers, p_vertexes)
             if (distance < min_distance or not min_distance):
                 min_distance = distance
-                p_center = vertexes[inx-1]
+                p_center = vertexes[inx]
         
         k_centers.append(p_center)
         vertexes.remove(p_center)
         return self.greedy_solution(k_centers, vertexes, i+1)
 
-    def local_search(self, solution, min_distance):
+    def local_search(self, solution, distance):
         old_center = choice(solution)
         candidate = solution[:]
         candidate.remove(old_center)
-        min_dist = min_distance
+        min_dist = distance
+        # new_v = False
         for v in self.vertexes:
             if (v is not old_center and v not in candidate):
                 new_candidate = candidate + [v]
-                if (min_dist == False):
-                    min_dist = self.max_distance(new_candidate, self.vertexes)
                 cand_dist = self.max_distance(new_candidate, self.vertexes)
                 if (cand_dist < min_dist):
                     min_dist = cand_dist
                     solution = new_candidate[:]
-        if (min_dist < min_distance):
+                    # new_v = v
+        # if (new_v):
+        #     self.vertexes.remove(new_v)
+        #     self.vertexes.append(old_center)
+        if (min_dist >= distance):
             return solution
         else:
             return self.local_search(solution, min_dist)
     
     def run_algorithm(self):
-        iterations = 25
-        min_dist = -1
-        for _ in range(iterations):
-            solution = self.greedy_solution(self.k_centers, self.vertexes, 1)
-            greedy_dist = self.max_distance(solution, self.vertexes)
-            local_solution = self.local_search(solution, greedy_dist)
-            dist = self.max_distance(local_solution, self.vertexes)
-            if (min_dist < 0):
-                min_dist = dist
-                self.best_so = local_solution
-            if dist < min_dist:
-                min_dist = dist
-                self.best_so = local_solution
-
-        self.k_centers = self.best_so
+        solution = self.greedy_solution(self.k_centers, self.vertexes, 1)
+        greedy_dist = self.max_distance(solution, self.vertexes)
+        local_solution = self.local_search(solution, greedy_dist)
+        self.k_centers = local_solution
         return self.get_k_centers()
