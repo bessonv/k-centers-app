@@ -14,6 +14,13 @@ class KMeans(Algorithm):
             self.iterations = 1
 
     def set_initial_centers(self):
+        # maxn = 0
+        # for row in self.distance_matrix:
+        #     for n in row:
+        #         if n > maxn:
+        #             maxn = n
+        # print('Max edge', maxn)
+
         self.clusters = []
         self.cluster_centers = [] 
         subset = sample(self.vertexes, self.k_num)
@@ -60,9 +67,13 @@ class KMeans(Algorithm):
         for _ in range(l_num):
             self.set_initial_centers()
             not_equal = True
+            i = 0;
             while not_equal:
+                i = i + 1;
                 self.set_clusters()
                 not_equal = self.change_weights() # change weight for every claster
+                if (i > 100):
+                    not_equal = False
             if (self.max_distance(self.cluster_centers, self.vertexes) < self.max_distance(self.k_centers, self.vertexes)):
                 self.k_centers = self.cluster_centers[:]
         return self.get_k_centers()

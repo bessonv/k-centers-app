@@ -45,8 +45,8 @@ window.onload = () => {
             });
         });
         console.log(mlist, knum);
-        postData('http://bessonv.pythonanywhere.com', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
-        // postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
+        // postData('http://bessonv.pythonanywhere.com', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
+        postData('http://localhost:5000', { mlist: mlist, knum: knum, algorithm: algorithm, options: options })
             .then((data) => {
                 console.log(data);
                 let ids = '';
