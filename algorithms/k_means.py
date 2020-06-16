@@ -14,31 +14,15 @@ class KMeans(Algorithm):
             self.iterations = 1
 
     def set_initial_centers(self):
-        # maxn = 0
-        # for row in self.distance_matrix:
-        #     for n in row:
-        #         if n > maxn:
-        #             maxn = n
-        # print('Max edge', maxn)
-
         self.clusters = []
         self.cluster_centers = [] 
         subset = sample(self.vertexes, self.k_num)
-        # print('Start clusters:', len(subset))
         for center in subset:
             cluster = Cluster(center, [])
             self.clusters.append(cluster)
-            # self.k_centers.append(center)
             self.cluster_centers.append(center)
         self.k_centers = self.cluster_centers[:]
-        # random_pull = []
-        # for i in range(self.k_num):
-        #     random_int = random.randint(0, len(self.vertexes)-1)
-        #     if (random in random_pull):
-        #         random_int = random.randint(0, len(self.vertexes)-1)
-        #     random_pull.append(random_int)
-        #     self.claster_centers.append(self.vertexes[random_int])
-        
+
     def set_clusters(self):
         for v in self.vertexes:
             nearest_cluster = self.clusters[0]

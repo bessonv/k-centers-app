@@ -36,11 +36,9 @@ class TabuSearch(Algorithm):
 
     def change_candidate(self):
         old_center = choice(self.best_candidate)
-        # for old_center in self.best_candidate:
         candidate = self.best_candidate[:]
         candidate.remove(old_center)
         min_dist = False
-        new_best_candidate = self.best_candidate
         for v in self.vertexes:
             if (v is not old_center and v not in candidate):
                 new_candidate = candidate + [v]
@@ -50,10 +48,7 @@ class TabuSearch(Algorithm):
                     cand_dist = self.max_distance(new_candidate, self.vertexes)
                     if (cand_dist < min_dist):
                         min_dist = cand_dist
-                        # new_best_candidate = new_candidate
                         self.best_candidate = new_candidate
-            # if (self.max_distance(new_best_candidate, self.vertexes) < self.max_distance(self.best_candidate, self.vertexes)):
-            #     self.best_candidate = new_best_candidate
         return min_dist
 
     def run_algorithm(self):
